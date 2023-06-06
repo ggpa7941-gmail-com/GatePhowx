@@ -77,6 +77,5 @@
             <p class="data">Data: 23 de maio de 2023</p>
         </article>
     </section>
-    </div>
 </body>
 </html>

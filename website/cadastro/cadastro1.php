@@ -69,7 +69,7 @@
         # se sim, redireciona para a pagina de admin com mensagem de sucesso.
         # se não, redireciona para a pagina de cadastro com mensagem de erro.
         if($stmt->rowCount()) {
-            header('location: home.php?success=Cadastro realizado com sucesso!');
+            header('location: ../login/login.php?success=Cadastro realizado com sucesso!');
         } else {
             header('location: cadastro1.php?error=Erro ao cadastrar nova conta!');
         }
@@ -84,7 +84,7 @@
             <img src="./_img/logo10.png.gif">
         </div>
         <div class="form">
-            <form action="../login/login.php" onsubmit='senhaOK();' method="post">
+            <form onsubmit='senhaOK();' method="post">
                 <div class="form-header">
                     <div class="title">
                         <h1>Cadastre-se</h1>
