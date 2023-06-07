@@ -52,7 +52,9 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `gate`.`conteudo` (
   `id_c` INT(11) NOT NULL,
   `link` VARCHAR(255) NOT NULL,
+  `titulo` VARCHAR(255) NOT NULL,
   `texto` MEDIUMTEXT NOT NULL,
+  `dataLancamento` VARCHAR(20),
   `usuario_id_user` INT(11) NOT NULL,
   `imagem_id_img` INT(11) NOT NULL,
   PRIMARY KEY (`id_c`, `usuario_id_user`, `imagem_id_img`),
