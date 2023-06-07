@@ -12,15 +12,15 @@
     session_start();
     
     # inclui o arquivo header
-   
+    
     
     # verifica se existe sessão de usuario e se ele é administrador.
     # se não existir redireciona o usuario para a pagina principal com uma mensagem de erro.
     # sai da pagina.
-    // if(!isset($_SESSION['usuario']) || $_SESSION['usuario']['perfil'] != 'ADM') {
-    //     header("Location: index.php?error=Usuário não tem permissão para acessar esse recurso");
-    //     exit;
-    // }
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']['perfil'] != 'ADM') {
+        header("Location: ../login/login.php?error=Usuário não tem permissão para acessar esse recurso");
+        exit;
+    }
 ?>
 <body>
     <form action="" method="post">
@@ -39,7 +39,11 @@
                             <li><a href="#">filmes/séries</a></li>
                             <li><a href="#">Animes</a></li>
                             <li><a href="#">Perfil</a></li>
-                            <li class="botao"><a href="../login/login.php">Login</a></li>
+                            <?php if(isset($_SESSION['usuario']))  {?>
+                                <li class="botao"><a href="../login/logout.php">Logout</a></li>
+                                <?php } else { ?>
+                                    <li class="botao"><a href="../login/login.php">Login</a></li>
+                            <?php } ?>
                         </ul>
                     </nav>
                 </header>
