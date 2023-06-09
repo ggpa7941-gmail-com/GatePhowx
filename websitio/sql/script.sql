@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS `gate`.`usuario` (
   `id_user` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
+  `cidade` VARCHAR(45) NOT NULL,
+  `estado` VARCHAR(19) NOT NULL,
   `sexo` CHAR(1) NOT NULL,
   `perfil` CHAR(3) NOT NULL DEFAULT 'USU' COMMENT 'ADM=Administrador\nUSU=Usuario',
   `senha` VARCHAR(60) NOT NULL,
@@ -116,25 +118,6 @@ CREATE TABLE IF NOT EXISTS `gate`.`curtir` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_curtir_usuario1`
-    FOREIGN KEY (`usuario_id_user`)
-    REFERENCES `gate`.`usuario` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `gate`.`endereco`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gate`.`endereco` (
-  `id_end` INT(11) NOT NULL AUTO_INCREMENT,
-  `cidade` VARCHAR(45) NOT NULL,
-  `estado` VARCHAR(19) NOT NULL,
-  `usuario_id_user` INT(11) NOT NULL,
-  PRIMARY KEY (`id_end`, `usuario_id_user`),
-  INDEX `fk_endereco_usuario_idx` (`usuario_id_user` ASC),
-  CONSTRAINT `fk_endereco_usuario`
     FOREIGN KEY (`usuario_id_user`)
     REFERENCES `gate`.`usuario` (`id_user`)
     ON DELETE NO ACTION

@@ -19,7 +19,7 @@
         # cria variaveis (email, nome, perfil, status) para armazenar os dados passados via método POST.
         $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
-        $sexo = isset($_POST['sexo']) ? $_POST['sexo'] : '';
+        $genero = isset($_POST['genero']) ? $_POST['genero'] : '';
         $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '';
         $estado = isset($_POST['estado']) ? $_POST['estado'] : '';
         $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
@@ -36,31 +36,18 @@
         
         # cria uma consulta banco de dados verificando se o usuario existe
         # usando como parametros os campos nome e password.
-        $query = "INSERT INTO `gate`.`usuario` (`nome`,`email`, `sexo`, `senha`, `perfil`)
-                    VALUES ( :nome, :email, :sexo, :senha, :perfil)";
+        $query = "INSERT INTO `gate`.`usuario` (`nome`,`email`, `sexo`, `cidade`, `estado`, `senha`, `perfil`)
+                    VALUES ( :nome, :email, :sexo, :cidade, :estado, :senha, :perfil)";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':sexo', $sexo);
+        $stmt->bindParam(':sexo', $genero);
+        $stmt->bindParam(':cidade', $cidade);
+        $stmt->bindParam(':estado', $estado);
         $stmt->bindParam(':perfil', $perfil);
         $stmt->bindParam(':senha', $senha);
 
 
-
-
-        # executa a consulta banco de dados para inserir o resultado.
-        $stmt->execute();
-
-
-        $idUsuario = $dbh->lastInsertId();
-        
-
-        $query = "INSERT INTO `gate`.`endereco` (`cidade`, `estado`, `usuario_id_user`)
-                    VALUES (:cidade, :estado, :usuario_id_user)";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindParam(':cidade', $cidade);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->bindParam(':usuario_id_user', $idUsuario);
         # executa a consulta banco de dados para inserir o resultado.
         $stmt->execute();
 
@@ -177,7 +164,7 @@
                             </div>
 
                             <div class="gender-input">
-                                <input type="radio" id="none" name="genero" value="n">
+                                <input type="radio" id="none" name="genero" value="n"  checked>
                                 <label for="none">Prefiro não informar</label>
                             </div>
                         </div>
