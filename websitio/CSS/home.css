@@ -204,3 +204,41 @@ nav ul li.botao:hover a{
     font-size: 20px;
     color: white;
 }
+.new .main-new-header a{
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    background: white;
+    border: 1px solid white;
+    padding: 9px 25px;
+    line-height: 1.4;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.new .main-new-header a:hover{
+    transform: scale(1.2);
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    transition: .4s;
+}
+.artigo .main-artigo-header a{
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    background: white;
+    border: 1px solid white;
+    padding: 9px 25px;
+    line-height: 1.4;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.artigo .main-artigo-header a:hover{
+    transform: scale(1.2);
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    transition: .4s;
+}

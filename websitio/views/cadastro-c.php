@@ -81,6 +81,18 @@
                 <label>Link</label>
             </div>
 
+            <div class="url">
+                <input type="text" name="titulo">
+                <span></span>
+                <label>Título</label>
+            </div>
+
+            <div class="url">
+                <input type="text" name="data">
+                <span></span>
+                <label>Data de lançamento</label>
+            </div>
+
                 <textarea class="txtarea" name="area" placeholder="Texto" cols="30" rows="10"></textarea>
                 <span></span>
                 <!-- <label>Texto</label> -->
