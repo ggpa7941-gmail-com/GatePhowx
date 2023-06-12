@@ -169,9 +169,6 @@ nav ul li.botao:hover a{
     font-size: 0.875em;
     color: white;
 }
-.artigo{
-    background: #3F0071;
-}
 .main-artigo{
     max-width: calc(1300px - 40px);
     padding:0 20px;
@@ -188,4 +185,22 @@ nav ul li.botao:hover a{
     color: white;
     margin-bottom: 5px;
     font-size: 1.8em;
+}
+.main-artigo article{
+    flex-basis: calc(25% - 20px);
+    margin-bottom: 30px;
+}
+.main-artigo article p{
+    margin: 10px 0;
+    color: white;
+    text-align: justify; 
+}
+.main-artigo article img{
+    width: 580px;
+}
+.titulo-artigo{
+    text-align: center;
+    margin: 10px 0;
+    font-size: 20px;
+    color: white;
 }

@@ -125,6 +125,8 @@ CREATE TABLE IF NOT EXISTS `gate`.`curtir` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+INSERT INTO gate.usuario (nome, email, cidade, estado, sexo, perfil, senha)
+VALUES 	('Admin', 'adm@gmail.com', 'Brasília', 'DF', 'm', 'ADM', md5(123456));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
