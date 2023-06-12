@@ -22,8 +22,13 @@
                         <li><a href="#games">Games</a></li>
                         <li><a href="#fms">filmes/séries</a></li>
                         <li><a href="#animes">Animes</a></li>
-                        <li><a href="#">Perfil</a></li>
+                        <li><a href="./views/alterUser.php">Perfil</a></li>
                         <li class="botao"><a href="./views/login.php">Login</a></li>
+                        <?php if(isset($_SESSION['usuario']))  {?>
+                                <li class="botao"><a href="logout.php">Logout</a></li>
+                                <?php } else { ?>
+                                    <li class="botao"><a href="login.php">Login</a></li>
+                            <?php } ?>
                     </ul>
                 </nav>
             </header>
