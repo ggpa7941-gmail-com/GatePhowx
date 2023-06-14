@@ -16,6 +16,32 @@
     # cria a variavel $dbh que vai receber a conexão com o SGBD e banco de dados.
     $dbh = Conexao::getInstance();
 
+     # verifica se os dados do formulario foram enviados via POST 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        # recupera o id do enviado por post para delete ou update.
+        $id = (isset($_POST['id']) ? $_POST['id'] : 0);
+        $operacao = (isset($_POST['botao']) ? $_POST['botao'] : null);
+        # verifica se o nome do botão acionado por post se é deletar ou atualizar
+        if($operacao === 'deletar'){
+            # cria uma query no banco de dados para excluir o usuario com id informado 
+            $query = "DELETE FROM `gate`.`usuario` WHERE id = :id";
+            $stmt = $dbh->prepare($query);
+            $stmt->bindParam(':id', $id);
+            
+            # executa a consulta banco de dados para excluir o registro.
+            $stmt->execute();
+
+            # verifica se a quantiade de registros excluido é maior que zero.
+            # se sim, redireciona para a pagina de admin com mensagem de sucesso.
+            # se não, redireciona para a pagina de admin com mensagem de erro.
+            if($stmt->rowCount()) {
+                header('location: listUser.php?success=Usuário excluído com sucesso!');
+            } else {
+                header('location: listUser.php?error=Erro ao excluir usuário!');
+            }
+        }
+
+    } 
     # cria uma consulta banco de dados buscando todos os dados da tabela usuarios 
     # ordenando pelo campo perfil e nome.
     $query = "SELECT * FROM `gate`.`usuario` ORDER BY perfil, nome";
@@ -27,30 +53,41 @@
     # Faz um fetch para trazer os dados existentes, se existirem, em um array na variavel $row.
     # se não existir retorna null
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
 
     # destroi a conexao com o banco de dados.
     $dbh = null;
 ?>
 <body>
-    <?php require_once 'layouts/admin/menu.php'; ?>
 
     <main>
+    <?php
+        # verifca se existe uma mensagem de erro enviada via GET.
+        # se sim, exibe a mensagem enviada no cabeçalho.
+        if(isset($_GET['error']) || isset($_GET['success']) ) { ?>
+            <script>
+                Swal.fire({
+                icon: '<?php echo (isset($_GET['error']) ? 'error' : 'success');?>',
+                title: 'Usuários',
+                text: '<?php echo (isset($_GET['error']) ? $_GET['error']: $_GET['success']); ?>',
+                })
+            </script>
+        <?php } ?>
         <div class="main_opc">
 
             <div class="main_stage">
-                <div class="main_stage_content">
-
                     <article>
                         <header>
 
                             <table border="0" width="1300px" class="table">
 
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
+                                    <th>ID</th>
                                     <th>Email</th>
+                                    <th>Cidade</th>
+                                    <th>Estado</th>
+                                    <th>Gênero</th>
                                     <th>Perfil</th>
-                                    <th>Status</th>
                                     <th>Ação</th>
                                 </tr>
                                 
@@ -64,12 +101,25 @@
                                         foreach ($rows as $row) {?>
                                         <tr>
                                             <td><?=$count?></td>
-                                            <td><?=$row['nome']?></td>
                                             <td><?=$row['email']?></td>
                                             <td><?=$row['cidade']?></td>
                                             <td><?=$row['estado']?></td>
+                                            <td><?=$row['sexo']?></td>
                                             <td><?=$row['perfil']?></td>
-                                            <td><button class="btn">Editar</button>&nbsp;<button class="btn">Apagar</button></td>
+                                            <td>
+                                                <div style="display:flex;">
+                                                    <button class="btn">Editar</button>&nbsp;
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="id" value="<?=$row['id_user']?>">
+                                                        <button class="btn" 
+                                                                name="botao" 
+                                                                value="deletar"
+                                                                onclick="return confirm('Deseja excluir o usuário?');"
+                                                                >Apagar</button>
+                                                    </form>
+
+                                                </div>
+                                            </td>
                                         </tr>    
                                         <?php $count++;} } else {?>
                                     <tr><td colspan="6"><strong>Não existem usuários cadastrados.</strong></td></tr>

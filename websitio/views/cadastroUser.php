@@ -148,22 +148,22 @@
                         </div>
 
                         <div class="gender-group">
-                            <div class="gender-input">
+                            <div class="gender-input" style="margin-left: 15px;">
                                 <input type="radio" id="feminino" name="genero" value="f">
                                 <label for="feminino">Feminino</label>
                             </div>
 
-                            <div class="gender-input">
+                            <div class="gender-input" style="margin-left: 15px;">
                                 <input type="radio" id="masculino" name="genero" value="m">
                                 <label for="masculino">Masculino</label>
                             </div>
 
-                            <div class="gender-input">
+                            <div class="gender-input" style="margin-left: 15px;">
                                 <input type="radio" id="outro" name="genero" value="o">
                                 <label for="outro">Outro</label>
                             </div>
 
-                            <div class="gender-input">
+                            <div class="gender-input" style="margin-left: 15px;">
                                 <input type="radio" id="none" name="genero" value="n"  checked>
                                 <label for="none">Prefiro não informar</label>
                             </div>

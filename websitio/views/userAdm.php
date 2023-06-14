@@ -37,7 +37,7 @@
                         <li><a href="#games">Games</a></li>
                         <li><a href="#fms">filmes/séries</a></li>
                         <li><a href="#animes">Animes</a></li>
-                        <li><a href="#">Perfis</a></li>
+                        <li><a href="listUser.php">Perfis</a></li>
                         <?php if(isset($_SESSION['usuario']))  {?>
                             <li class="botao"><a href="logout.php">Logout</a></li>
                             <?php } else { ?>
@@ -54,7 +54,7 @@
                     <p>Mortal Kombat 1 promete um “universo renascido” com versões reimaginadas dos personagens que o público adora. Um novo sistema de luta, modos de jogo e fatalities também foram confirmados. <br> Mortal Kombat 1 chega ao mercado em 19 de setembro para PC, PlayStation 5, Xbox Series X|S e Nintendo Switch.
                     </p>
                     <a href="https://www.youtube.com/watch?v=Ue1Yo-3QnRc">Assista Agora</a>
-                    <a href="./cadastro-c.php">Editar</a>
+                    <a href="./addTend.php">Editar</a>
             </div>
             <div class="imagem">
                 <img src="../IMG/mortal1.png">
@@ -66,7 +66,7 @@
         <section class="main-new" id="lancamentos">
             <header class="main-new-header">
                 <h1>Lançamentos do mês</h1>
-                <a href="./cadastro-c.php">Editar</a>
+                <a href="./addLanc.php">Editar</a>
             </header>
 
             <article>
@@ -132,7 +132,7 @@
     <section class="main-artigo" id="games">
         <header class="main-artigo-header">
             <h1>Games</h1>
-            <a href="./cadastro-c.php">Editar</a>
+            <a href="./addGame.php">Editar</a>
         </header>
 
         <article>
@@ -177,7 +177,7 @@
     <section class="main-artigo" id="fms">
         <header class="main-artigo-header">
             <h1>Filmes/Séries</h1>
-            <a href="./cadastro-c.php">Editar</a>
+            <a href="./addFS.php">Editar</a>
         </header>
 
         <article>
@@ -222,7 +222,7 @@
     <section class="main-artigo" id="animes">
         <header class="main-artigo-header">
             <h1>Animes</h1>
-            <a href="./cadastro-c.php">Editar</a>
+            <a href="./addAnime.php">Editar</a>
         </header>
 
         <article>
