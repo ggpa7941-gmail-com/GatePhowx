@@ -28,9 +28,10 @@
     # verifica se os dados do formulario foram enviados via POST 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         # cria variaveis (nome, status, tipo) para armazenar os dados passados via método POST.
-        $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
-        $status = isset($_POST['status']) ? $_POST['status'] : 0;
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : 'ART';
+        $link = isset($_POST['link']) ? $_POST['link'] : '';
+        $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : '';
+        $texto = isset($_POST['texto']) ? $_POST['texto'] : '';
+        $data = isset($_POST['data']) ? $_POST['data'] : '';
         
 
         # cria um comando SQL para adicionar valores na tabela categorias 
@@ -62,7 +63,7 @@
         <h1>Cadastro de Tendência</h1>
         <form method="post">
             <div class="url">
-                <input type="url" name="url" pattern="https://.*">
+                <input type="url" name="link" pattern="https://.*">
                 <span></span>
                 <label>Link</label>
             </div>
@@ -79,11 +80,11 @@
                 <label>Data de lançamento</label>
             </div>
 
-                <textarea class="txtarea" name="area" placeholder="Texto" cols="30" rows="10"></textarea>
+                <textarea class="txtarea" name="texto" placeholder="Texto" cols="30" rows="10"></textarea>
                 <span></span>
                 <!-- <label>Texto</label> -->
 
-                <input type="file" id="uploadbtn" accept=".jpg, .gif, .png">
+                <input type="file" name="uploadbtn" id="uploadbtn" accept=".jpg, .gif, .png">
                 <label for="uploadbtn" class="uploadBtn">Escolher Arquivo</label>
 
             <input type="submit" value="Enviar">

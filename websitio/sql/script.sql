@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -32,19 +32,7 @@ CREATE TABLE IF NOT EXISTS `gate`.`usuario` (
   PRIMARY KEY (`id_user`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `gate`.`imagem`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gate`.`imagem` (
-  `id_img` INT(11) NOT NULL,
-  `link` VARCHAR(255) NOT NULL,
-  `tipo` BLOB NOT NULL,
-  `data` DATE NOT NULL,
-  PRIMARY KEY (`id_img`))
-ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -56,20 +44,14 @@ CREATE TABLE IF NOT EXISTS `gate`.`conteudo` (
   `link` VARCHAR(255) NOT NULL,
   `titulo` VARCHAR(255) NOT NULL,
   `texto` MEDIUMTEXT NOT NULL,
-  `dataLancamento` VARCHAR(20),
+  `tipoImg` BLOB NOT NULL,
+  `dataLancamento` VARCHAR(20) NULL DEFAULT NULL,
   `usuario_id_user` INT(11) NOT NULL,
-  `imagem_id_img` INT(11) NOT NULL,
-  PRIMARY KEY (`id_c`, `usuario_id_user`, `imagem_id_img`),
+  PRIMARY KEY (`id_c`, `usuario_id_user`),
   INDEX `fk_conteudo_usuario1_idx` (`usuario_id_user` ASC),
-  INDEX `fk_conteudo_imagem1_idx` (`imagem_id_img` ASC),
   CONSTRAINT `fk_conteudo_usuario1`
     FOREIGN KEY (`usuario_id_user`)
     REFERENCES `gate`.`usuario` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_conteudo_imagem1`
-    FOREIGN KEY (`imagem_id_img`)
-    REFERENCES `gate`.`imagem` (`id_img`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
