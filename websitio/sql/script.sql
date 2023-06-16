@@ -14,7 +14,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema gate
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `gate` DEFAULT CHARACTER SET utf8 ;
+DROP SCHEMA IF EXISTS `gate`;
+CREATE SCHEMA `gate` DEFAULT CHARACTER SET utf8 ;
 USE `gate` ;
 
 -- -----------------------------------------------------
@@ -40,12 +41,12 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gate`.`conteudo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gate`.`conteudo` (
-  `id_c` INT(11) NOT NULL,
+  `id_c` INT(11) NOT NULL AUTO_INCREMENT,
   `link` VARCHAR(255) NOT NULL,
   `titulo` VARCHAR(255) NOT NULL,
   `tipo` CHAR(5) NOT NULL  DEFAULT 'CONT' COMMENT 'CONT=Conteudo\nTEND=Tendencia\nLANC=Lancamento\nFS=FilmeSerie\nGAME=Game\nANIME=Anime' ,
   `texto` MEDIUMTEXT NOT NULL,
-  `tipoImg` BLOB NOT NULL,
+  `tipoImg` VARCHAR(255) NOT NULL,
   `usuario_id_user` INT(11) NOT NULL,
   PRIMARY KEY (`id_c`, `usuario_id_user`),
   INDEX `fk_conteudo_usuario1_idx` (`usuario_id_user` ASC),
