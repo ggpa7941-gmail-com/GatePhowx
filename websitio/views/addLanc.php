@@ -7,69 +7,62 @@
     <link rel="stylesheet" href="../CSS/cadastro-c.css">
     <title>Cadastro de Lançamentos</title>
 </head>
-<?php
+<?php 
     # para trabalhar com sessões sempre iniciamos com session_start.
     session_start();
-   
+    
     # inclui o arquivo header e a classe de conexão com o banco de dados.
     require_once "../db/conexao.php";
-   
-    # verifica se os dados do formulario foram enviados via POST
+
+    # verifica se existe sessão de usuario e se ele é administrador.
+    # se não existir redireciona o usuario para a pagina principal com uma mensagem de erro.
+    # sai da pagina.
+    if(!isset($_SESSION['usuario']) || ($_SESSION['usuario']['perfil'] != 'ADM' )) {
+        header("Location: ./home.php?error=Usuário não tem permissão para acessar esse recurso");
+        exit;
+    }
+
+    # cria a variavel $dbh que vai receber a conexão com o SGBD e banco de dados.
+    $dbh = Conexao::getInstance();
+    
+    # verifica se os dados do formulario foram enviados via POST 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        # cria variaveis (link, texto) para armazenar os dados passados via método POST.
+        # cria variaveis (nome, status, tipo) para armazenar os dados passados via método POST.
         $link = isset($_POST['link']) ? $_POST['link'] : '';
+        $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : '';
         $texto = isset($_POST['texto']) ? $_POST['texto'] : '';
-        
-        // $status = 1;
-       
-        // echo '<pre>';var_dump($_POST); exit;
-        # cria a variavel $dbh que vai receber a conexão com o SGBD e banco de dados.
-        $dbh = Conexao::getInstance();
-
-
+        $tipo = 'LANC';
+        $tipoImg = isset($_POST['tipoImg']) ? $_POST['tipoImg'] : '';
 
         
-        # cria uma consulta banco de dados verificando se o usuario existe
-        # usando como parametros os campos nome e password.
-        $query = "INSERT INTO `gate`.`conteudo` (`link`,`texto`)
-                    VALUES ( :link, :texto)";
+
+        # cria um comando SQL para adicionar valores na tabela categorias 
+        $query = "INSERT INTO `gate`.`conteudo` (`link`,`titulo`, `texto`, `tipo`, `tipoImg`)
+                    VALUES (:link, :titulo, :texto, :tipo, :tipoImg)";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':link', $link);
+        $stmt->bindParam(':titulo', $titulo);
         $stmt->bindParam(':texto', $texto);
-        $stmt->bindParam(':sexo', $sexo);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':tipoImg', $img);
 
+        // echo '<pre>';var_dump($query); exit;
 
-
-
-        # executa a consulta banco de dados para inserir o resultado.
+        # executa o comando SQL para inserir o resultado.
         $stmt->execute();
-
-
-        $idUsuario = $dbh->lastInsertId();
-        
-
-        $query = "INSERT INTO `gate`.`imagem` (`link`, `tipo`, `usuario_id_user`)
-                    VALUES (:cidade, :estado, :usuario_id_user)";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindParam(':cidade', $cidade);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->bindParam(':usuario_id_user', $idUsuario);
-        # executa a consulta banco de dados para inserir o resultado.
-        $stmt->execute();
-
 
         # verifica se a quantiade de registros inseridos é maior que zero.
         # se sim, redireciona para a pagina de admin com mensagem de sucesso.
         # se não, redireciona para a pagina de cadastro com mensagem de erro.
         if($stmt->rowCount()) {
-            header('location: ../login/login.php?success=Cadastro realizado com sucesso!');
+            header('location: userAdm.php?success=Categoria inserido com sucesso!');
         } else {
-            header('location: cadastro1.php?error=Erro ao cadastrar nova conta!');
+            header('location: addTend.php?error=Erro ao inserir categoria!');
         }
-
-        # destroi a conexao com o banco de dados.
-        $dbh = null;
     }
+
+    # destroi a conexao com o banco de dados.
+    $dbh = null;
 ?>
 <body>
     <div class="center">

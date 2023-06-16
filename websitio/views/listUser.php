@@ -108,7 +108,6 @@
                                             <td><?=$row['perfil']?></td>
                                             <td>
                                                 <div style="display:flex;">
-                                                    <button class="btn">Editar</button>&nbsp;
                                                     <form action="" method="post">
                                                         <input type="hidden" name="id" value="<?=$row['id_user']?>">
                                                         <button class="btn" 

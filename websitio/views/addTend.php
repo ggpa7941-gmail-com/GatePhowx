@@ -31,16 +31,22 @@
         $link = isset($_POST['link']) ? $_POST['link'] : '';
         $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : '';
         $texto = isset($_POST['texto']) ? $_POST['texto'] : '';
-        $data = isset($_POST['data']) ? $_POST['data'] : '';
+        $tipo = 'TEND';
+        $tipoImg = isset($_POST['tipoImg']) ? $_POST['tipoImg'] : '';
+
         
 
         # cria um comando SQL para adicionar valores na tabela categorias 
-        $query = "INSERT INTO `gate`.`conteudo` (`nome`,`status`, `tipo`)
-                    VALUES (:nome, :status, :tipo)";
+        $query = "INSERT INTO `gate`.`conteudo` (`link`,`titulo`, `texto`, `tipo`, `tipoImg`)
+                    VALUES (:link, :titulo, :texto, :tipo, :tipoImg)";
         $stmt = $dbh->prepare($query);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':link', $link);
+        $stmt->bindParam(':titulo', $titulo);
+        $stmt->bindParam(':texto', $texto);
         $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':tipoImg', $img);
+
+        // echo '<pre>';var_dump($query); exit;
 
         # executa o comando SQL para inserir o resultado.
         $stmt->execute();
@@ -49,9 +55,9 @@
         # se sim, redireciona para a pagina de admin com mensagem de sucesso.
         # se não, redireciona para a pagina de cadastro com mensagem de erro.
         if($stmt->rowCount()) {
-            header('location: categoria_index.php?success=Categoria inserido com sucesso!');
+            header('location: userAdm.php?success=Categoria inserido com sucesso!');
         } else {
-            header('location: categoria_add.php?error=Erro ao inserir categoria!');
+            header('location: addTend.php?error=Erro ao inserir categoria!');
         }
     }
 
@@ -74,17 +80,17 @@
                 <label>Título</label>
             </div>
 
-            <div class="url">
+            <!-- <div class="url">
                 <input type="text" name="data">
                 <span></span>
                 <label>Data de lançamento</label>
-            </div>
+            </div> -->
 
                 <textarea class="txtarea" name="texto" placeholder="Texto" cols="30" rows="10"></textarea>
                 <span></span>
                 <!-- <label>Texto</label> -->
 
-                <input type="file" name="uploadbtn" id="uploadbtn" accept=".jpg, .gif, .png">
+                <input type="file" name="img" id="uploadbtn" accept=".jpg, .gif, .png">
                 <label for="uploadbtn" class="uploadBtn">Escolher Arquivo</label>
 
             <input type="submit" value="Enviar">
