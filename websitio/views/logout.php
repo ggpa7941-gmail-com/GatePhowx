@@ -2,4 +2,7 @@
     session_start();
     session_destroy();
 
-    header('location: login.php');
+    echo '<script>window.location = "../views/login.php"</script>'
+    
+?>
+    

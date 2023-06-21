@@ -33,11 +33,8 @@
                 <nav>
                     <ul>
                         <li active><a href="#">Home</a></li>
-                        <li><a href="#lancamentos">Lançamentos</a></li>
-                        <li><a href="#games">Games</a></li>
-                        <li><a href="#fms">filmes/séries</a></li>
-                        <li><a href="#animes">Animes</a></li>
-                        <li><a href="listUser.php">Perfis</a></li>
+                        <li><a href="listConteudo.php">Lista de conteúdo</a></li>
+                        <li><a href="listUser.php">Lista de usuários</a></li>
                         <?php if(isset($_SESSION['usuario']))  {?>
                             <li class="botao"><a href="logout.php">Logout</a></li>
                             <?php } else { ?>

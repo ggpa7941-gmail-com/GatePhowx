@@ -74,7 +74,7 @@
         if($stmt->rowCount()) {
             header('location: userAdm.php?success=Tendência inserido com sucesso!');
         } else {
-            header('location: addTend.php?error=Erro ao inserir Tendência!');
+            header('location: addGame.php?error=Erro ao inserir Tendência!');
         }
     }
 

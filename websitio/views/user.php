@@ -37,7 +37,7 @@
                         <li><a href="#games">Games</a></li>
                         <li><a href="#fms">filmes/séries</a></li>
                         <li><a href="#animes">Animes</a></li>
-                        <li><a href="#">Perfil</a></li>
+                        <li><a href="perfil.php">Perfil</a></li>
                         <?php if(isset($_SESSION['usuario']))  {?>
                             <li class="botao"><a href="logout.php">Logout</a></li>
                             <?php } else { ?>

@@ -1,0 +1,86 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(120deg, #000000, #150050, #3F0071, #610094);
+    background-size: 300% 300%;
+    height: 100vh;
+    animation: colors 15s ease infinite;
+}
+@keyframes colors{
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+.main-header-lista{
+    flex-basis: 100%;
+    margin: 30px 0;
+}
+.main-header-lista h1{
+    color: white;
+    margin-bottom: 5px;
+    font-size: 40px;
+    text-align: center;
+}
+.main_stage{
+    width: 100%;
+    background: #03001C;
+    color: white;
+    text-align: center;
+}
+.table tr th{
+    font-weight: 500;
+    font-size: 1.2em;
+    background-color: #3F0071;
+    color: white;
+}
+.btn{
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 15px;
+    text-decoration: none;
+    
+}
+.btn:hover{
+    color: black;
+    background: white;
+    transition: .4s;
+}
+.main_opc{
+    position: relative;
+}
+.back-btn{
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 15px;
+    text-decoration: none;
+    
+}
+.back-btn:hover{
+    color: black;
+    background: white;
+    transition: .4s;
+}
+.botao{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+/* .btn{
+    position: relative;
+    width: 49%;
+} */

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/cadastro-c.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Cadastro de Tendência</title>
 </head>
 <?php 
@@ -35,7 +36,7 @@
         $usuario_id_user = $_SESSION['usuario']['id'];
         
         # definie o caminho onde sera gravado o arquivo.
-        $uploaddir = __DIR__ . '/conteudo/';
+        $uploaddir = __DIR__ . '/IMG/';
         $imagemName = basename($_FILES['img']['name']);
         $uploadfile = $uploaddir . $imagemName;
         
@@ -82,6 +83,18 @@
     $dbh = null;
 ?>
 <body>
+<?php
+        # verifca se existe uma mensagem de erro enviada via GET.
+        # se sim, exibe a mensagem enviada no cabeçalho.
+        if(isset($_GET['error']) || isset($_GET['success']) ) { ?>
+            <script>
+                Swal.fire({
+                icon: '<?php echo (isset($_GET['error']) ? 'error' : 'success');?>',
+                title: 'GatePhowx',
+                text: '<?php echo (isset($_GET['error']) ? $_GET['error']: $_GET['success']); ?>',
+                })
+            </script>
+    <?php } ?>
     <div class="center">
         <h1>Cadastro de Tendência</h1>
         <form method="post" enctype="multipart/form-data">

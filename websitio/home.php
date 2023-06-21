@@ -5,14 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./CSS/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Pagina de noticias</title>
 </head>
+<?php
+    # para trabalhar com sessões sempre iniciamos com session_start.
+    session_start();
+
+    # inclui os arquivos header, menu e login.
+    
+    require_once "./db/conexao.php";
+
+    # cria a variavel $dbh que vai receber a conexão com o SGBD e banco de dados.
+    $dbh = Conexao::getInstance();
+    
+    # cria variavel que recebe parametro da categoria
+    # se foi passado via get quando o campo select do
+    # formulario é modificado.
+    $filtroTitulo = isset($_GET['filtro']) ? $_GET['filtro'] : null;
+    
+    
+    # cria uma consulta banco de dados buscando todos os dados da tabela  
+    # ordenando pelo campo data e limita o resultado a 10 registros.
+    $query = "SELECT * FROM `gate`.`conteudo` WHERE titulo = titulo";
+    # verifica se existe filtro para categoria.
+    # se sim adiciona condição ao select.
+    if($filtroTitulo != null && $filtroTitulo != "0") {
+        $query .= " AND titulo LIKE '%" .$filtroTitulo . "%' ";    
+    }
+
+    $query .= " ORDER BY titulo DESC limit 8";
+
+    $stmt = $dbh->prepare($query);
+    
+    # executa a consulta banco de dados e aguarda o resultado.
+    $stmt->execute();
+    
+    # Faz um fetch para trazer os dados existentes, se existirem, em um array na variavel $row.
+    # se não existir retorna null
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    # destroi a conexao com o banco de dados.
+    $dbh = null;
+?>
 <body>
+    <?php
+        # verifca se existe uma mensagem de erro enviada via GET.
+        # se sim, exibe a mensagem enviada no cabeçalho.
+        if(isset($_GET['error']) || isset($_GET['success']) ) { ?>
+            <script>
+                Swal.fire({
+                icon: '<?php echo (isset($_GET['error']) ? 'error' : 'success');?>',
+                title: 'GatePhowx',
+                text: '<?php echo (isset($_GET['error']) ? $_GET['error']: $_GET['success']); ?>',
+                })
+            </script>
+    <?php } ?>
     <section class="hero">
         <div class="main-width">
             <header>
                 <div class="logo">
                     <h2><a href="#">GatePhowx</a></h2>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" 
+                        name="filtro" 
+                        value="<?= isset($_GET['filtro'])?$_GET['filtro']:'';?>" 
+                        class="search-txt" placeholder="Faça sua pesquisa">
+
+                    <a href="#" class="search-btn">
+                        <img src="./IMG/loupe.png" alt="Lupa" width="15" height="15">
+                    </a>
                 </div>
 
                 <nav>
@@ -52,12 +116,20 @@
                 <h1>Lançamentos do mês</h1>
             </header>
 
+        <?php if($rows) { foreach ($rows as $row){ ?>
+
+        <?php } } else { echo "<p>Não existem artigos cadastrados</p>"; } ?>
+
             <article>
                 <div class="imagem1">
-                    <img src="./IMG/fantasy.png" width="200" alt="Imagem post" title="Imagem Post">
+                <?php 
+                    $path =  './IMG/'.$row['tipoImg'];
+                    echo "<img alt='" . $row['titulo'] . "' src='$path'>";
+                ?>
+                    
                 </div>
-                <h2 class="titulo">FINAL FANTASY XVI</h2>
-                <p class="data">Data: 22 de junho de 2023</p>
+                <h2 class="titulo"><?= $row['titulo']?></h2>
+                <p class="data"><?=$row['texto'];?></p>
             </article>
             <article>
                 <div class="imagem1">
@@ -141,7 +213,7 @@
                     <img src="./IMG/branco.png" width="500" alt="Imagem post" title="Imagem Post">
                 </a>
             </div>
-            <h2 class="titulo-artigo">Novas Notícias</h2>
+            <!-- <h2 class="titulo-artigo">Novas Notícias</h2>
             <p> Em breve, novas notícias!!!</p>
         </article>
         <article>
@@ -153,7 +225,7 @@
             <h2 class="titulo-artigo">Novas Notícias</h2>
             <p> Em breve, novas notícias!!!</p>
         </article>
-    </div>
+    </div> -->
 
     <div class="artigo">
     <section class="main-artigo" id="fms">
@@ -180,12 +252,12 @@
             <p> A animação da Marvel recebeu no IMDb nota 9.1, superando o Batman no ranking dos melhores filmes de super heróis. <br> Batman: O Cavaleiro das Trevas, de Christopher Nolan, é uma grande referência em termos de filmes de super-heróis. O longa detém um impressionante 9.0/10 no IMDb, estando em primeiro lugar no ranking dos melhores filmes do gênero. <br> Entretanto, Homem-aranha, através do aranhaverso ultrapassou o filme, assumindo a liderança com 9.1/10.</p>
         </article>
         <article>
-            <div class="imagem1">
+           <!-- <div class="imagem1">
                 <a href="https://www.google.com">
                     <img src="./IMG/branco.png" width="500" alt="Imagem post" title="Imagem Post">
                 </a>
             </div>
-            <h2 class="titulo-artigo">Novas Notícias</h2>
+             <h2 class="titulo-artigo">Novas Notícias</h2>
             <p> Em breve, novas notícias!!!</p>
         </article>
         <article>
@@ -197,7 +269,7 @@
             <h2 class="titulo-artigo">Novas Notícias</h2>
             <p> Em breve, novas notícias!!!</p>
         </article>
-    </div>
+    </div> -->
 
     <div class="artigo">
     <section class="main-artigo" id="animes">
@@ -205,7 +277,7 @@
             <h1>Animes</h1>
         </header>
 
-        <article>
+        <!-- <article>
             <div class="imagem1">
                 <a href="https://www.google.com">
                     <img src="./IMG/branco.png" width="500" alt="Imagem post" title="Imagem Post">
@@ -241,6 +313,6 @@
             <h2 class="titulo-artigo">Novas Notícias</h2>
             <p> Em breve, novas notícias!!!</p>
         </article>
-    </div>
+    </div> -->
 </body>
 </html>

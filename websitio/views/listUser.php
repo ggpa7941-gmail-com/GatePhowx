@@ -19,14 +19,14 @@
      # verifica se os dados do formulario foram enviados via POST 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         # recupera o id do enviado por post para delete ou update.
-        $id = (isset($_POST['id']) ? $_POST['id'] : 0);
+        $id = (isset($_POST['id_user']) ? $_POST['id_user'] : 0);
         $operacao = (isset($_POST['botao']) ? $_POST['botao'] : null);
         # verifica se o nome do botão acionado por post se é deletar ou atualizar
         if($operacao === 'deletar'){
             # cria uma query no banco de dados para excluir o usuario com id informado 
-            $query = "DELETE FROM `gate`.`usuario` WHERE id = :id";
+            $query = "DELETE FROM `gate`.`usuario` WHERE id_user = :id_user";
             $stmt = $dbh->prepare($query);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id_user', $id);
             
             # executa a consulta banco de dados para excluir o registro.
             $stmt->execute();
@@ -58,9 +58,23 @@
     # destroi a conexao com o banco de dados.
     $dbh = null;
 ?>
-<body>
 
-    <main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/listUser.css">
+    <title>Lista de usuários</title>
+</head>
+<body>
+    <div class="lista">
+        <header class="main-header-lista">
+            <h1>Lista de usuários</h1>
+        </header>
+    </div>
+<main>
     <?php
         # verifca se existe uma mensagem de erro enviada via GET.
         # se sim, exibe a mensagem enviada no cabeçalho.
@@ -74,13 +88,10 @@
             </script>
         <?php } ?>
         <div class="main_opc">
-
             <div class="main_stage">
                     <article>
                         <header>
-
-                            <table border="0" width="1300px" class="table">
-
+                            <table  width="1000" class="table">
                                 <tr>
                                     <th>ID</th>
                                     <th>Email</th>
@@ -90,7 +101,6 @@
                                     <th>Perfil</th>
                                     <th>Ação</th>
                                 </tr>
-                                
                                 <?php
                                     # verifica se os dados existem na variavel $row.
                                     # se existir faz um loop nos dados usando foreach.
@@ -109,14 +119,12 @@
                                             <td>
                                                 <div style="display:flex;">
                                                     <form action="" method="post">
-                                                        <input type="hidden" name="id" value="<?=$row['id_user']?>">
+                                                        <input type="hidden" name="id_user" value="<?=$row['id_user']?>">
                                                         <button class="btn" 
                                                                 name="botao" 
                                                                 value="deletar"
-                                                                onclick="return confirm('Deseja excluir o usuário?');"
-                                                                >Apagar</button>
+                                                                onclick="return confirm('Deseja excluir o usuário?');">Excluir</button>
                                                     </form>
-
                                                 </div>
                                             </td>
                                         </tr>    
@@ -124,17 +132,11 @@
                                     <tr><td colspan="6"><strong>Não existem usuários cadastrados.</strong></td></tr>
                                 <?php }?>
                             </table>
-
                         </header>
                     </article>
-
                 </div>
             </div>
-
-    </main>
+</main>
     <!--FIM DOBRA PALCO PRINCIPAL-->
-
 </body>
-
-
 </html>

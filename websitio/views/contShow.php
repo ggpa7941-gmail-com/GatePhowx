@@ -11,14 +11,15 @@
     # cria variavel que recebe parametro da categoria
     # se foi passado via get quando o campo select do
     # formulario é modificado.    
-    $id_c = isset($_GET['id']) ? $_GET['id'] : 0;
-    
+    // $id_c = isset($_GET['id']) ? $_GET['id'] : 0;
+
     
     # cria uma consulta banco de dados buscando todos os dados da tabela  
     # ordenando pelo campo data e limita o resultado a 10 registros.
-    $query = "SELECT * FROM `gate`.`conteudo` WHERE id_c = $id_c ";    
+    $query = "SELECT * FROM `gate`.`conteudo` ORDER BY titulo, tipo";    
     $stmt = $dbh->prepare($query);
     
+    $query .= " ORDER BY titulo DESC limit 8";
     # executa a consulta banco de dados e aguarda o resultado.
     $stmt->execute();
     
@@ -30,10 +31,6 @@
     $dbh = null;
     // echo '<pre>';var_dump($row);exit;
 ?>
-
-<!--DOBRA PALCO PRINCIPAL-->
-
-<!--1ª DOBRA-->
 
 <main>
     
@@ -49,50 +46,11 @@
                 })
             </script>
     <?php } ?>
-    <!-- <style>
-        .main_cta header {
-            color: #fff;
-            font-size: 2.3rem;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0;
-        }
-        
-        .main_blog_header p {
-            margin-top:20px;
-        }
-        .main_blog_header p span {
-            border-radius: 5px;
-            border: 1px solid darkorange;
-            font-weight: 600;
-            background-color: darkorange;
-            color: #fff;
-            padding:3px 25px;
-        }
-
-        .artigo_show div img {
-            height:500px;
-            width: 100%;
-        }
-
-        .artigo_show p  {
-            margin-top: 10px;
-        }
-
-        .artigo_show__texto {
-            font-size: 1.2rem;
-            font-weight: 100;
-            text-align: justify;
-        }
-    </style> -->
     <div class="main_cta">
         <header>
             <h1>Artigos</h1>
         </header>
     </div>
-    <!--FIM 1ª DOBRA-->
     <section class="main_blog">
         <header class="main_blog_header">
             <?php 
@@ -123,6 +81,15 @@
         </section>
         <br>
         <br>
+        <?php if($rows) { foreach ($rows as $row){ ?>
+            <article>
+                
+                <img src="<?=$imagem?>" width="200" alt="<?=$row['titulo']?>" title="<?=$row['titulo']?>">
+                <h2 class="title" title="<?=$row['texto']?>">
+
+                <p class="data"><?=$row['texto'];?></p>
+                </h2>
+            </article>
+        <?php } } else { echo "<p>Não existem artigos cadastrados</p>"; } ?>
     </section>
 </main>
-

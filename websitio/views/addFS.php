@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/cadastro-c.css">
-    <title>Cadastro de Filmes/Séries</title>
+    <title>Cadastro de Tendência</title>
 </head>
 <?php 
     # para trabalhar com sessões sempre iniciamos com session_start.
@@ -32,21 +32,38 @@
         $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : '';
         $texto = isset($_POST['texto']) ? $_POST['texto'] : '';
         $tipo = 'FS';
-        $tipoImg = isset($_POST['tipoImg']) ? $_POST['tipoImg'] : '';
-
+        $usuario_id_user = $_SESSION['usuario']['id'];
         
+        # definie o caminho onde sera gravado o arquivo.
+        $uploaddir = __DIR__ . '/conteudo/';
+        $imagemName = basename($_FILES['img']['name']);
+        $uploadfile = $uploaddir . $imagemName;
+        
+        # verifica se o diretorio existe? Se não existir cria um novo.
+        if(!file_exists($uploaddir)) {
+            mkdir($uploaddir, 0777);
+        }
+        # recebe o arquivo a ser gravado e inserido no diretorio criado. 
+        # Se sim, gravano diretorio. Se não, limpa o nome da variavel que
+        # sera usada no banco de dados.
+        if(!move_uploaded_file($_FILES['img']['tmp_name'], $uploadfile)){
+            $imagemName  = '';
+        }
+        
+        // echo '<pre>';var_dump($_FILES, $_POST, $uploaddir, $imagemName, $uploadfile); exit;
 
         # cria um comando SQL para adicionar valores na tabela categorias 
-        $query = "INSERT INTO `gate`.`conteudo` (`link`,`titulo`, `texto`, `tipo`, `tipoImg`)
-                    VALUES (:link, :titulo, :texto, :tipo, :tipoImg)";
+        $query = "INSERT INTO `gate`.`conteudo` (`link`,`titulo`, `texto`, `tipo`, `tipoImg`, `usuario_id_user`)
+                    VALUES (:link, :titulo, :texto, :tipo, :tipoImg, :usuario_id_user)";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':link', $link);
         $stmt->bindParam(':titulo', $titulo);
         $stmt->bindParam(':texto', $texto);
         $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':tipoImg', $img);
+        $stmt->bindParam(':tipoImg', $imagemName);
+        $stmt->bindParam(':usuario_id_user', $usuario_id_user);
 
-        // echo '<pre>';var_dump($query); exit;
+        // 
 
         # executa o comando SQL para inserir o resultado.
         $stmt->execute();
@@ -55,9 +72,9 @@
         # se sim, redireciona para a pagina de admin com mensagem de sucesso.
         # se não, redireciona para a pagina de cadastro com mensagem de erro.
         if($stmt->rowCount()) {
-            header('location: userAdm.php?success=Categoria inserido com sucesso!');
+            header('location: userAdm.php?success=Tendência inserido com sucesso!');
         } else {
-            header('location: addTend.php?error=Erro ao inserir categoria!');
+            header('location: addFS.php?error=Erro ao inserir Tendência!');
         }
     }
 
@@ -66,10 +83,10 @@
 ?>
 <body>
     <div class="center">
-        <h1>Cadastro de Filmes/Séries</h1>
-        <form method="post">
+        <h1>Cadastro de Tendência</h1>
+        <form method="post" enctype="multipart/form-data">
             <div class="url">
-                <input type="url" name="url" pattern="https://.*">
+                <input type="url" name="link" pattern="https://.*">
                 <span></span>
                 <label>Link</label>
             </div>
@@ -80,17 +97,11 @@
                 <label>Título</label>
             </div>
 
-            <div class="url">
-                <input type="text" name="data">
-                <span></span>
-                <label>Data de lançamento</label>
-            </div>
-
-                <textarea class="txtarea" name="area" placeholder="Texto" cols="30" rows="10"></textarea>
+                <textarea class="txtarea" name="texto" placeholder="Texto" cols="30" rows="10"></textarea>
                 <span></span>
                 <!-- <label>Texto</label> -->
 
-                <input type="file" id="uploadbtn" accept=".jpg, .gif, .png">
+                <input type="file" name="img" id="uploadbtn" accept=".jpg, .gif, .png">
                 <label for="uploadbtn" class="uploadBtn">Escolher Arquivo</label>
 
             <input type="submit" value="Enviar">

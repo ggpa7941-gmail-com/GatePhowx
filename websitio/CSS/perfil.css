@@ -1,0 +1,51 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background: linear-gradient(120deg, #000000, #150050, #3F0071, #610094);
+    background-size: 300% 300%;
+    animation: colors 15s ease infinite;
+}
+@keyframes colors{
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+.profile-card{
+    width: 400px;
+    margin: auto;
+    background: black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.img-container{
+    position: relative;
+}
+.main-container{
+    padding: 20px;
+}
+.btn{
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 15px;
+    text-decoration: none;
+    width: 49%;
+}
+.btn:hover{
+    color: black;
+    background: white;
+    transition: .4s;
+    border: 1px solid white;
+}
+.titulo{
+    position: absolute;
+    left: 20px;
+    top: 210px;
+}
